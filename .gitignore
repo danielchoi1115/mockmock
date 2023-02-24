@@ -1,0 +1,14 @@
+.vscode/
+
+__pycache__/
+venv/
+
+configs/
+
+chromedriver
+
+docker-compose.yml
+
+*.log
+*.csv
+*.txt
