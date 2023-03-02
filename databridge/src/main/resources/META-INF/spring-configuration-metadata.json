@@ -1,0 +1,12 @@
+{
+  "properties": [
+    {
+      "name": "spring.influx.token",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "spring.influx.org",
+      "type": "java.lang.String"
+    }
+  ]
+}
