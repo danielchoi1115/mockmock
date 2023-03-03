@@ -5,6 +5,7 @@ from seleniumwire.request import Response
 import json
 from json import JSONDecodeError
 from configs import config, Company
+from _global import utils
 from pydantic import BaseModel
 from datetime import datetime
 import time
@@ -17,7 +18,7 @@ class AccessionScrapper(BaseModel):
 
     def setDriver(self):
         if self.driver is None:
-            self.driver = config.get_webdriver()
+            self.driver = utils.get_webdriver()
 
     def setUrl(self, company: Company):
         self.url = config.EDGAR_SEARCH_URL_TEMPLATE.substitute(ciks=company.ciks, entity=company.entity)
