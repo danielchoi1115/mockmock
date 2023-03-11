@@ -1,2 +1,3 @@
-from .report_scrapper import reportScrapper
+from .report_scraper import reportScraper
 from .report_validator import reportValidator
+from .parsers import ReportParserFactory

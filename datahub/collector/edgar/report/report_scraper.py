@@ -1,14 +1,14 @@
 import requests
 from pydantic import BaseModel
 from typing import List
-from configs import config
-from accession import AccessionDto
+from _global.configs import config
+from edgar.accession import AccessionDto
 import time
 import logging
 
 log = logging.getLogger(__name__)
 
-class ReportScrapper(BaseModel):
+class ReportScraper(BaseModel):
     scraped_data: List = []
     url: str = None
 
@@ -27,11 +27,11 @@ class ReportScrapper(BaseModel):
     def set_url(self, adsh: str):
         reportId = adsh.replace("-", "")
         filename = adsh
-        self.url = config.EDGAR_ARCHIVE_URL_TEMPLATE.substitute(reportId=reportId, filename=filename)
+        self.url = config.edgar.ARCHIVE_URL_TEMPLATE.substitute(reportId=reportId, filename=filename)
 
     def scrap(self, accessionDto: AccessionDto):
         for accession in accessionDto.accessions:
-            headers = config.EDGAR_REQUEST_HEADERS
+            headers = config.edgar.REQUEST_HEADERS
             self.set_url(accession.adsh)
             data = self.get(self.url, headers=headers)
             self.scraped_data.append(data)
@@ -41,4 +41,4 @@ class ReportScrapper(BaseModel):
         self.scraped_data = None
 
 
-reportScrapper = ReportScrapper()
+reportScraper = ReportScraper()

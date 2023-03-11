@@ -1,23 +1,23 @@
 
-from report.parsers import ReportTableParser, ReportXMLParser, ReportParser
+from edgar.report import parsers
 from typing import Type
-from accession import Accession
+from edgar.accession import Accession
 
 
 class ReportParserFactory:
     @staticmethod
-    def getParserType(reportRaw: str) -> Type[ReportParser]:
+    def getParserType(reportRaw: str) -> Type[parsers.ReportParser]:
         if "<TABLE>" in reportRaw:
-            return ReportTableParser
+            return parsers.ReportTableParser
         elif "<XML>" in reportRaw:
-            return ReportXMLParser
+            return parsers.ReportXMLParser
 
     @staticmethod
     def getParser(
-        parserClass: ReportParser,
+        parserClass: parsers.ReportParser,
         reportRaw: str,
         accesion: Accession
-    ) -> ReportParser:
+    ) -> parsers.ReportParser:
 
         return parserClass(
             reportRaw=reportRaw,
@@ -26,7 +26,7 @@ class ReportParserFactory:
         )
 
     @staticmethod
-    def getParserOf(reportRaw: str, accesion: Accession) -> ReportParser:
+    def getParserOf(reportRaw: str, accesion: Accession) -> parsers.ReportParser:
         cls = ReportParserFactory.getParserType(reportRaw)
         return ReportParserFactory.getParser(
             parserClass=cls,

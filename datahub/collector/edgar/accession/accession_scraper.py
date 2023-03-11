@@ -4,14 +4,15 @@ from seleniumwire.utils import decode
 from seleniumwire.request import Response
 import json
 from json import JSONDecodeError
-from configs import config, Company
 from _global import utils
+from _global.configs import config
+from edgar.configs import Company
 from pydantic import BaseModel
 from datetime import datetime
 import time
 
 
-class AccessionScrapper(BaseModel):
+class AccessionScraper(BaseModel):
     driver: webdriver.Chrome = None
     results: List | None = []
     url: str | None = None
@@ -21,7 +22,7 @@ class AccessionScrapper(BaseModel):
             self.driver = utils.get_webdriver()
 
     def setUrl(self, company: Company):
-        self.url = config.EDGAR_SEARCH_URL_TEMPLATE.substitute(ciks=company.ciks, entity=company.entity)
+        self.url = config.edgar.SEARCH_URL_TEMPLATE.substitute(ciks=company.ciks, entity=company.entity)
 
     def scrap(self, page=1):
         """
@@ -49,7 +50,7 @@ class AccessionScrapper(BaseModel):
 
         decoded = None
         for request in self.driver.requests:
-            if request.response and request.url == config.ACCESSION_XHR_KEYWORD:
+            if request.response and request.url == config.edgar.ACCESSION_XHR_KEYWORD:
                 decoded = self.decode_respose(request.response)
                 break
         # raise error if no result
@@ -72,7 +73,7 @@ class AccessionScrapper(BaseModel):
         encoding = response.headers.get('Content-Encoding', 'identity')
         try:
             result = response.body
-            if encoding in config.edgar_encoding_types:
+            if encoding in config.edgar.encoding_types:
                 result = decode(result, encoding).decode("utf-8")
             return json.loads(result)
         except JSONDecodeError as e:
@@ -86,4 +87,4 @@ class AccessionScrapper(BaseModel):
         arbitrary_types_allowed = True
 
 
-accessionScrapper = AccessionScrapper()
+accessionScraper = AccessionScraper()

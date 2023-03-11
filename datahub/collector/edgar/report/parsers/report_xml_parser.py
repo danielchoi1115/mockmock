@@ -1,5 +1,5 @@
-from report.parsers import ReportParser
-from configs import parseOption
+from edgar.report.parsers import ReportParser
+from edgar.configs import parseOption
 import pandas as pd
 import xmltodict
 from xml.parsers.expat import ExpatError

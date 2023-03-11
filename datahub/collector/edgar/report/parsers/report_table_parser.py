@@ -1,6 +1,6 @@
-from report.parsers import ReportParser
+from . import ReportParser
 from typing import List, Dict, Tuple
-from configs import parseOption
+from edgar.configs import parseOption
 import pandas as pd
 from io import StringIO
 import logging
@@ -10,18 +10,17 @@ log = logging.getLogger(__name__)
 class ReportTableParser(ReportParser):
     reportRaw: str | None = None
     
-
-    'nameOfIssuer',
-    'titleOfClass',
-    'cusip',
-    'value',
-    'shrsOrPrn.Amt',
-    'shrsOrPrn.Type',
-    'investmentDiscretion',
-    'otherManager',
-    'votingAuth.Sole',
-    'votingAuth.Shared',
-    'votingAuth.None'
+    # 'nameOfIssuer',
+    # 'titleOfClass',
+    # 'cusip',
+    # 'value',
+    # 'shrsOrPrn.Amt',
+    # 'shrsOrPrn.Type',
+    # 'investmentDiscretion',
+    # 'otherManager',
+    # 'votingAuth.Sole',
+    # 'votingAuth.Shared',
+    # 'votingAuth.None'
     
     headerMapper: Dict = {
         'nameofissuer': 'nameOfIssuer',

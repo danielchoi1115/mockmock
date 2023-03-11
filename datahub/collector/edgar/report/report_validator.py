@@ -1,4 +1,4 @@
-from report.parsers import ReportParser
+from .parsers import ReportParser
 import logging
 
 log = logging.getLogger(__name__)

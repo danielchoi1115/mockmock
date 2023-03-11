@@ -1,18 +1,18 @@
-from accession import AccessionScrapper, AccessionParser, AccessionDto
+from accession import AccessionScraper, AccessionParser, AccessionDto
 from configs import Company
 
 
 def getAccessionDto(
     company: Company,
-    scrapper: AccessionScrapper,
+    scraper: AccessionScraper,
     parser: AccessionParser
 ) -> AccessionDto:  
-    scrapper.setDriver()
-    scrapper.setUrl(company)
-    scrapper.scrap()
+    scraper.setDriver()
+    scraper.setUrl(company)
+    scraper.scrap()
     parser.parse(
         ciks=company.ciks,
-        results=scrapper.results
+        results=scraper.results
     )
 
     return parser.accessionDto
