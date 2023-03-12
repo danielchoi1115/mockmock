@@ -12,5 +12,8 @@ if __name__ == "__main__":
         datefmt='%Y-%m-%d %H:%M:%S',
     )
 
-    subtasks.run_all(fake_run=True)
+    # subtasks.run_edgar()
+    # subtasks.run_all(fake_run=True)
     # subtasks.run_naver(fake_run=True)
+    
+    

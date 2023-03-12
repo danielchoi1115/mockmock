@@ -6,11 +6,14 @@ from ecos.configs import stat_codeset
 from ecos.scrapers import EcosScraper
 from ecos.parsers import EcosParser
 
+import edgar
+
 from _global.storage import dataSender
 from _global.configs import config
 
 import time
 import logging
+from datetime import datetime
 
 log = logging.getLogger(__name__)
 
@@ -49,7 +52,6 @@ def run_naver(fake_run: bool):
         scraper.clear_data()
         time.sleep(2)
 
-
 def run_ecos(fake_run: bool):
     for d in stat_codeset:
         print(f"Scrapping {str(d)}")
@@ -83,6 +85,21 @@ def run_ecos(fake_run: bool):
 
             time.sleep(3)
 
+def run_edgar(fake_run: bool = False):
+    with open("/home/sychoi/mockmock/datahub/collector/edgar/report/0001037389-23-000119.txt", 'r') as f:
+        reportRaw = f.read()
+
+    acc = edgar.Accession(
+        adsh="0001037389-23-000119",
+        reportDate=datetime(2022, 12, 31)
+    )
+    reportParser = edgar.report.ReportParserFactory.getParserOf(reportRaw=reportRaw, accesion=acc)
+
+    reportParser.parse()
+    reportParser.postProcess()
+
+    with open("pandas2.txt", 'w') as f:
+        f.write(reportParser.parsedData.to_csv())
 
 def run_all(fake_run: bool = False):
     run_naver(fake_run)
